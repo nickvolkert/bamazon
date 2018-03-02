@@ -12,3 +12,5 @@ CREATE TABLE products(
   stock_qty DECIMAL(10, 4) NULL,
   PRIMARY KEY (id)
 );
+
+SELECT * FROM products;
