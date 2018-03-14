@@ -1,7 +1,6 @@
 {
   "name": "bamazon",
   "version": "1.0.0",
-  "description": "",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -15,5 +14,12 @@
   "bugs": {
     "url": "https://github.com/nickvolkert/bamazon/issues"
   },
-  "homepage": "https://github.com/nickvolkert/bamazon#readme"
+  "homepage": "https://github.com/nickvolkert/bamazon#readme",
+  "dependencies": {
+    "inquirer": "^5.1.0",
+    "mysql": "^2.15.0",
+    "npm": "^5.7.1"
+  },
+  "devDependencies": {},
+  "description": ""
 }
