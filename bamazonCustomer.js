@@ -15,6 +15,12 @@ connection.connect(function(err) {
   productListing();
 });
 
+function logItPretty(){
+  console.log("");
+  console.log("--------------------------------------------------------------------------");
+  console.log("");
+}
+
 // function to handle posting new items up for auction
 function start() {
   // prompt for info about the item being put up for auction
@@ -56,21 +62,19 @@ function start() {
 
 
 function productListing(res) {
-  console.log("Selecting all products...\n");
   var query = "SELECT * FROM products";
   connection.query(query, function(error, res) {
-    console.log("we're in this connection");
     if (error) throw err;
       // Log all results of the SELECT statement
       for (var i = 0; i < res.length; i++) {
+        console.log('Product Name: ' + res[i].id);
   			console.log('Product Name: ' + res[i].product_name);
   			console.log('Department: ' + res[i].dept_name);
   			console.log('Price: $' + res[i].price);
         console.log('Stock: ' + res[i].stock_qty);
-        console.log("is this working?");
+        logItPretty();
   		}
-
-    start();
+      start();
   });
 }
 //
