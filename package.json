@@ -16,6 +16,7 @@
   },
   "homepage": "https://github.com/nickvolkert/bamazon#readme",
   "dependencies": {
+    "ascii-table": "0.0.9",
     "inquirer": "^5.1.0",
     "mysql": "^2.15.0",
     "npm": "^5.7.1"
