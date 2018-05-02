@@ -16,25 +16,22 @@ connection.connect(function(err) {
   productListing();
 });
 
-function logItPretty(){
-  console.log("");
-  console.log("--------------------------------------------------------------------------");
-  console.log("");
-}
-
 function productListing(res) {
   var query = "SELECT * FROM products";
   connection.query(query, function(err, res) {
+    var table = new AsciiTable('Bamazon Products')
+    table.setHeading("item_id", "product_name", "dept_name", "price", "stock")
     if (err) throw err;
       // Log all results of the SELECT statement
       for (var i = 0; i < res.length; i++) {
-          console.log('Product ID: ' + res[i].item_id)
-          console.log('Product Name: ' + res[i].product_name)
-          console.log('Department: ' + res[i].dept_name)
-          console.log('Price: $' + res[i].price);
-          console.log('Stock: ' + res[i].stock_qty);
-          logItPretty();
+          var itemID = res[i].item_id;
+          var prodID = res[i].product_name;
+          var deptID = res[i].dept_name;
+          var priceID = res[i].price;
+          var stockQTY = res[i].stock_qty;
+          table.addRow(itemID, prodID, deptID, priceID, stockQTY);
   		}
+      console.log(table.toString());
       start();
   });
 }
