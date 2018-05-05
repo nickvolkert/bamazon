@@ -68,10 +68,10 @@ function start() {
       var query = "SELECT product_name, price, stock_qty FROM products WHERE item_id = " + orderID;
       // SELECT product_name, price, stock_qty FROM bamazonDB . products WHERE item_id = 3
       connection.query(query, function(err, res) {
-        console.log("log query " + query);
-        console.log("log response " + JSON.stringify(res));
-        console.log("log amount " + userAnswer.amount);
-        console.log("log purchase units " + userAnswer.purchaseUnits);
+        // console.log("log query " + query);
+        // console.log("log response " + JSON.stringify(res));
+        // console.log("log amount " + userAnswer.amount);
+        // console.log("log purchase units " + userAnswer.purchaseUnits);
         if(err) throw err;
         if (parseInt(userAnswer.purchaseUnits) <= parseInt(res[0].stock_qty)){
           var stockUpdate = (res[0].stock_qty - parseInt(userAnswer.purchaseUnits));
