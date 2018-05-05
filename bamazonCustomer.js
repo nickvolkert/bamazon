@@ -20,16 +20,16 @@ function productListing(res) {
   var query = "SELECT * FROM products";
   connection.query(query, function(err, res) {
     var table = new AsciiTable('Bamazon Products')
-    table.setHeading("item_id", "product_name", "dept_name", "price", "stock")
+    table.setHeading("item_id", "product_name", "dept_name", "stock", "price")
     if (err) throw err;
       // Log all results of the SELECT statement
       for (var i = 0; i < res.length; i++) {
           var itemID = res[i].item_id;
           var prodID = res[i].product_name;
           var deptID = res[i].dept_name;
-          var priceID = res[i].price;
           var stockQTY = res[i].stock_qty;
-          table.addRow(itemID, prodID, deptID, priceID, stockQTY);
+          var priceID = res[i].price;
+          table.addRow(itemID, prodID, deptID, stockQTY, priceID);
   		}
       console.log(table.toString());
       start();
@@ -41,7 +41,7 @@ function start() {
   inquirer.prompt([
       {
         type: "item",
-        name: "inputItemID",
+        name: "userAnswer",
         message: "What is the ID of the item you would like to buy (Enter ID)?",
         validate: function(value) {
           if (isNaN(value) === false) {
@@ -63,16 +63,21 @@ function start() {
       }
     ])
     .then(function(userAnswer) {
-      var query = "SELECT * FROM products WHERE item_id=?";
-      connection.query(query, {item_id: userAnswer.inputItemID}, function(err, res) {
+      var orderID = (userAnswer.inputItemID);
+      var query = "SELECT product_name, price, stock_qty FROM products WHERE item_id=" + orderID;
+      connection.query(query, function(err, res) {
         if(err) throw err;
-
-        if (res[0].stock_qty < userAnswer.purchaseUnits){
-          console.log("Sorry, insuffecient quantity, only " + res[0].stock_qty + "in stock");
-          start();
-        } else {
-          // product logging
-        }
+        if (userAnswer.quantity >= res[0].stock_qty){
+          var stockUpdate = (res[i].stock_qty - userAnswer.amount);
+          var queryTwo = "UPDATE products SET stock_qty = " + res[i].stock_qty - userAnswer.amount + "productName = " + "WHERE item_id = " + userAnswer.inputItemID;
+          connection.query(queryTwo, function(err, res) {
+              if(err) throw err;
+            });
+            console.log("Thanks for your order!");
+          } else {
+            console.log("Sorry, insuffecient quantity, only " + res[0].stock_qty + "in stock");
+          }
+        start();
       })
     });
 }
