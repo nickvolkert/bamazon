@@ -63,19 +63,26 @@ function start() {
       }
     ])
     .then(function(userAnswer) {
-      var orderID = (userAnswer.inputItemID);
-      var query = "SELECT product_name, price, stock_qty FROM products WHERE item_id=" + orderID;
+      // [ RowDataPacket { product_name: 'Nerf Football', price: 20, stock_qty: 20 } ]
+      var orderID = parseInt(userAnswer.userAnswer);
+      var query = "SELECT product_name, price, stock_qty FROM products WHERE item_id = " + orderID;
+      // SELECT product_name, price, stock_qty FROM bamazonDB . products WHERE item_id = 3
       connection.query(query, function(err, res) {
+        console.log("log query " + query);
+        console.log("log response " + JSON.stringify(res));
+        console.log("log amount " + userAnswer.amount);
+        console.log("log purchase units " + userAnswer.purchaseUnits);
         if(err) throw err;
-        if (userAnswer.quantity >= res[0].stock_qty){
-          var stockUpdate = (res[i].stock_qty - userAnswer.amount);
-          var queryTwo = "UPDATE products SET stock_qty = " + res[i].stock_qty - userAnswer.amount + "productName = " + "WHERE item_id = " + userAnswer.inputItemID;
+        if (parseInt(userAnswer.purchaseUnits) <= parseInt(res[0].stock_qty)){
+          var stockUpdate = (res[0].stock_qty - parseInt(userAnswer.purchaseUnits));
+          console.log("stock update " + stockUpdate);
+          var queryTwo = "UPDATE products SET stock_qty = " + stockUpdate + "WHERE item_id = " + orderID;
           connection.query(queryTwo, function(err, res) {
               if(err) throw err;
             });
             console.log("Thanks for your order!");
-          } else {
-            console.log("Sorry, insuffecient quantity, only " + res[0].stock_qty + "in stock");
+        } else {
+            console.log("Sorry, insuffecient quantity, only " + res[0].stock_qty + " in stock");
           }
         start();
       })
