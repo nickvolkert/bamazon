@@ -53,7 +53,7 @@ function start() {
       {
         type: "input",
         name: "purchaseUnits",
-        message: "How many units would you like to buy?",
+        message: "How many units (see stock quantity) would you like to buy?",
         validate: function(value) {
           if (isNaN(value) === false) {
             return true;
